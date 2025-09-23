@@ -1,0 +1,78 @@
+#include <stdio.h>
+int main() {
+    int menubool=1,menu;
+    char titre[1000][50],auteur[1000][30];
+    int qte[1000],rank=0;
+    float prix[1000];
+
+    do {
+        printf("===========================================================\n");
+        printf("1.Ajouter un livre au stock.\n");
+        printf("2.Afficher tous les livres disponibles.\n");
+        printf("3.Rechercher un livre par son titre.\n");
+        printf("4.Mettre a jour la quantite d'un livre.\n");
+        printf("5.Supprimer un livre du stock.\n");
+        printf("6.Afficher le nombre total de livres en stock.\n");
+        printf("7.quitter le programe\n\n");
+        scanf("%d",&menu);
+        switch (menu) {
+            case 1:
+                for (int i=rank;i<rank+1;i++) {
+                    printf("entrez le titre du livre\n");
+                    scanf("%s",titre[i]);
+                    printf("entrez l'auteur du livre\n");
+                    scanf("%s",auteur[i]);
+                    printf("entrez le prix du livre\n");
+                    scanf("%f",&prix[i]);
+                    printf("entrez la qte du livre en stock\n");
+                    scanf("%d",&qte[i]);
+                    printf("le livre ete ajouter avec succes\n\n");
+                }
+                rank++;
+                break;
+            case 2:
+                for (int i=0;i<rank;i++) {
+                    printf("=====REF-%d=====\n",rank+1);
+                    printf("Titre du livre: %s\n",titre[i]);
+                    printf("Auteur du livre: %s\n",auteur[i]);
+                    printf("prix du livre: %.2f\n",prix[i]);
+                    printf("Qte en stock: %d\n",qte[i]);
+                }
+                printf("\n\n");
+                break;
+            case 3:
+                char title[1][50];
+                int many,done=0;
+                printf("entrez la titre du livre:\n");
+                scanf("%s",title[0]);
+                printf("entrez la nouvelle Qte:\n");
+                scanf("%d",&many);
+                for (int i=0;i<=rank;i++) {
+                    if (title[0]==titre[i]) {
+                        qte[i]=many;
+                        done=1;
+                        break;
+                    }
+                }
+                if (done) printf("la qte ete medifiee\n");
+                else {
+                    printf(" le livre n'existe pas\n");
+                }
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                menubool=0;
+                break;
+            default:
+                printf("typo");
+                break;
+
+
+        }
+    }while (menubool);
+}
