@@ -23,23 +23,29 @@ int main () {
 
     int i=0;
     int in=0;
+
     while(i<L1){
+        //
         if(string1[i]==understring[0]){
             int j=i;
             int y=0;
             
             while(y<L2){
+
                 if(string1[j]==understring[y]) {
                     in=1;
                 }
                 else {
                     in=0;
+                    break;
                 }
                 j++;
                 y++;
             }
-            if(in=1)
+        //
+            if(in==1){
             break;
+            }
         }
         i++;
     }    
@@ -47,5 +53,9 @@ int main () {
     if(in==1) {
         printf("its working, its in");
     }
+    else {
+        printf(":(");
+    }
+
 
 }
