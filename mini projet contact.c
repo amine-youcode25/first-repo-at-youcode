@@ -14,36 +14,32 @@ struct contact {
 //     else {
 //         return 0;
 //     }
-    
+
 // }
-
-void show(struct contact person[],int i){
-        printf("-------------------%d------------------\n",i);
-        printf("le nom=======>%s\n",person[i].nom);
-        printf("le numero====>%s\n",person[i].phone);
-        printf("l'email======>%s\n",person[i].mail);
+void scan() {
+    scanf(" %[^\n]");
+}
+void show(struct contact person[], int i) {
+    printf("-------------------%d------------------\n", i);
+    printf("le nom=======> %s\n", person[i].nom);
+    printf("le numero====> %s\n", person[i].phone);
+    printf("l'email======> %s\n", person[i].mail);
 }
 
 
-int find(struct contact person[],char keyword[],int i){
-    int find_at_least_one=0;
-    if(strstr(person[i].nom,keyword)!='\0'){
-            find_at_least_one=1;
-            return i;
+int find(struct contact person[], char keyword[], int y) {
+    if (strstr(person[y].nom, keyword) != '\0') {
+        return y;
         }
-
-    if (find_at_least_one==0) return (-1);
+    else {
+        return (-1);
+    }
 }
-
-
-
-
-
 
 int main() {
     struct contact person[100];
     int a;
-    int nbr_contact=-1;
+    int nbr_contact = -1;
     do {
         printf("\n\n\n1. Ajouter un Contact\n");
         printf("2. Modifier un Contact\n");
@@ -52,61 +48,59 @@ int main() {
         printf("5. Rechercher un Contact\n");
         printf("6. exit\n");
         printf("====> ");
-        scanf("%d",&a);
+        scanf("%d", &a);
 
         switch (a) {
-
             case 1: //ad
             {
                 nbr_contact++;
                 printf("entrez le nom: ");
-                scanf(" %[^\n]",person[nbr_contact].nom);
+                scanf(" %[^\n]", person[nbr_contact].nom);
                 printf("entrez le numero de telephone +212: ");
-                scanf(" %[^\n]",person[nbr_contact].phone);
+                scanf(" %[^\n]", person[nbr_contact].phone);
                 printf("entrez l'email: ");
-                scanf(" %[^\n]",person[nbr_contact].mail);
+                scanf(" %[^\n]", person[nbr_contact].mail);
                 printf("==========contact succesfully added================\n");
-                show(person,nbr_contact);
+                show(person, nbr_contact);
 
                 break;
             }
 
-            case 2://edit
+            case 2: //edit
             {
                 printf("entrez le nom du contact que tu veux medifier: ");
-
             }
 
-            case 3://delete
+            case 3: //delete
             {
-
+                scan();
             }
 
-            case 4://show
+            case 4: //show
             {
-                for (int i=0;i<=nbr_contact;i++){
-                    show(person,i);
+                for (int i = 0; i <= nbr_contact; i++) {
+                    show(person, i);
                 }
                 break;
             }
 
-            case 5://search
+            case 5: //search
             {
                 char temp_nom[99];
+                int bool=0;
                 printf("Enterez le nom ===> ");
-                scanf(" %[^\n]",temp_nom);
-                for (int i;i<=nbr_contact;i++){
-                if (find(person,temp_nom,nbr_contact)>-1){
-                    show(person,find(person,temp_nom,nbr_contact));
+                scanf(" %[^\n]", temp_nom);
+                for (int i=0; i<= nbr_contact; i++) {
+                    if (find(person, temp_nom,i) > -1) {
+                        show(person, find(person, temp_nom,i));
+                        bool=1;
+                    }
                 }
-            }
-                else {
-                    ("le contact est introuvable:\n");
-                }
+                if (bool==0) printf("contact introuvable");
                 break;
             }
 
-            case 6://quit
+            case 6: //quit
             {
                 break;
             }
@@ -115,9 +109,5 @@ int main() {
                 printf("vous devez choisir un choix !\n");
                 break;
         }
-
-
-
-
-    } while (a!=0);
-}             
+    } while (a != 0);
+}
