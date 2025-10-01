@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
+
 struct zoo {
     //date de creation
     int id;
@@ -12,7 +13,34 @@ struct zoo {
     float poids;
     char category[50];
 };
+
 struct zoo animal[200];
+
+struct count{
+    char name[50];
+    int count;
+};
+struct count espece[200];
+int espece_count_for_struct=15;
+struct count espece[]={
+    {"Lion",4},
+    {"Tigre",1},
+    {"Ours",1},
+    {"Elephant",2},
+    {"Zebre",1},
+    {"Hippopotame",1},
+    {"Lemurien",1},
+    {"Girafe",1},
+    {"Suricate",1},
+    {"Phacochere",1},
+    {"Serpent",1},
+    {"Perroquet",1},
+    {"Chien sauvage",1},
+    {"Tortue",1},
+    {"Oiseau",1},
+    {"Gorille",1}
+};
+
 
 struct zoo animal[] = {
     {0, "Simba", "Lion", 5, "Savane", 190.5,"carnivores"},
@@ -86,6 +114,7 @@ int main() {
         printf("| 4:Supprimer un Animal                   |\n");
         printf("| 5:Rechercher un animal                  |\n");
         printf("| 6:Statistiques                          |\n");
+        printf("| 7:Quitter le program                    |\n");
         printf("===========================================\n");
         printf("\n\n\nentrez votre choix================>");
 
@@ -116,6 +145,7 @@ int main() {
                 break;
             } //ajouter finished
 
+
             case '2': {
                 printf("1:Afficher la liste complete.\n");
                 printf("2:Afficher la liste trier par Nom.\n");
@@ -132,7 +162,7 @@ int main() {
                     int arrayx[animal_nombre+1],temp;
                     for(int i=0;i<=animal_nombre;i++){
                         arrayx[i]=i;
-                    }
+                    } //array d'indices
 
                     
                     for(int i=0;i<=animal_nombre;i++){
@@ -144,15 +174,17 @@ int main() {
                                 arrayx[j]=temp;
                             }
                         }
-                    }
+                    } //storing indices trier
 
                     
                     for(int i=0;i<=animal_nombre;i++){
                         affichage(arrayx[i]);
-                    }
+                    }//affiachage avec array alraedy with indexs trier
 
                 }
+
                 else if (user_choix == 3) { //trier avec age
+
                     int array_age[animal_nombre+1],temp;
                     for(int i=0;i<=animal_nombre;i++){
                         array_age[i]=i;
@@ -212,7 +244,6 @@ int main() {
                 if (ahla==0){
                     printf("animal introuvable\n");
                     break;
-
                 }
                 int choix=0;
                 for(int i=0;i<=index;i++){
@@ -224,8 +255,13 @@ int main() {
                 getchar();
                 if(choix > -1 && choix <=index){
                     printf("entrez le nouveau habitat (appuyez sur entrez si vous navez rien a changer)\n==>");
-                    fgets_char(temp_input[1]);
-                    if(temp_input[1][0]!='\n') strcpy(animal[store_index[choix]].habitat,temp_input[1]);
+                    fgets(temp_input[1],50,stdin);
+
+                    if(temp_input[1][0]!='\n') {
+                        temp_input[1][strlen(temp_input[1])-1]='\0';
+                        strcpy(animal[store_index[choix]].habitat,temp_input[1]);
+                    }
+
                     printf("entrez le nouveau age d'animal (entrez 0 si vous n'avez rien a changer))\n==>");
                     scanf("%d",&new_age);
                     getchar();
@@ -267,7 +303,7 @@ int main() {
                             animal[i]=animal[i+1];
                         }
                         animal_nombre--;
-                        printf("l'animal a ete supprimer avec succes!\n");
+                        printf("   l'animal a ete supprimer avec succes!\n");
                         }
                         else {
                             printf("id introuvable!\n");
@@ -379,11 +415,33 @@ int main() {
                     affichage(index_store1);
                     printf("le maximum age est %d",max);
                     affichage(index_store2);
-                    // ana ba9i hna kol index fih index dyal wahd abro khask dir affichage dyalhom o tktb fo9hom min o max age
+                    //kol index fih index dyal wahd  khask dir affichage dyalhom o tktb fo9hom min o max age
                 }
                 else if(stat_choix==4){
+                    //as always indice f array
+     
+                    int array_tosort_forespece[espece_count_for_struct];
+                    for(int i=0;i<=espece_count_for_struct;i++){
+                        array_tosort_forespece[i]=i;
+                    }
                     
+                    for(int i=0;i<=espece_count_for_struct;i++){
+                        for(int j=0;j<espece_count_for_struct;j++){
+                        if(espece[array_tosort_forespece[j]].count>espece[array_tosort_forespece[j+1]].count){
+                            int temp=array_tosort_forespece[j+1];
+                            array_tosort_forespece[j+1]=array_tosort_forespece[j];
+                            array_tosort_forespece[j]=temp;
+                        }
+                    }
                 }
+                printf("les especes les plus presentes sont:"); // les 3 especes dans le sort
+                for(int i=0;i<3;i++){
+                    printf("les especes les plus presentes sont:");
+
+                }
+            }
+
+
 
 
 
@@ -391,14 +449,12 @@ int main() {
                 break;
             }
             case '7': {
-                break;
-            }
-            case '8': {
+                choix='8';
                 break;
             }
 
             default: {
-                choix = '0';
+                choix = 'a';
                 break;
             }
         }
@@ -416,6 +472,32 @@ int ajouter(int i) {
     fgets_char(animal[animal_nombre].nom);
     printf("entrez l'espece: ");
     fgets_char(animal[animal_nombre].espece);
+
+
+    int ahla_espece=1;
+    for(int i=0;i<=espece_count_for_struct;i++){
+        if(strcasecmp(animal[animal_nombre].espece,espece[i].name)==0){
+            ahla_espece=0;
+            espece[i].count++;
+            break;
+        }
+        else {
+            ahla_espece=1;
+        }
+    }
+
+    if(ahla_espece==1){
+        espece_count_for_struct++;
+        strcpy(espece[espece_count_for_struct].name,animal[animal_nombre].espece);
+        espece[i].count=0;
+    }
+
+
+
+
+
+
+
     while (1) {
         printf("entrez le categorie d'animal:\n");
         printf("1:carnivores:\n2:herbivores\n3:omnivores\n==>");
@@ -440,7 +522,9 @@ int ajouter(int i) {
     scanf("%d", &animal[animal_nombre].age);
     getchar();
     printf("entrez l'habitat: ");
-    fgets_char(animal[animal_nombre].habitat);
+    fgets_char(animal[animal_nombre].habitat); //jai besoin najouter les habitat li machi deja endi f struct
+
+
     printf("entrez le poids: ");
     scanf("%f", &animal[animal_nombre].poids);
     getchar();
@@ -452,9 +536,14 @@ int ajouter(int i) {
 
 
 void affichage(int i) {
+    char message[]="!!!";
+    if(animal[i].age<20){
+        strcpy(message,"   ");
+    }
+
     printf("________________________________________________________________________________________________________________\n");
-    printf("| %-5s |  %-20s | %-20s  | %-5s |  %-15s | %-6s  |  %-15s |\n","ID","NOM","ESPECE","AGE","HABITAT","POIDS","categorie");
-    printf("| %-5d |  %-20s | %-20s  | %-5d |  %-15s | %-7.2f |  %-15s |\n",animal[i].id,animal[i].nom,animal[i].espece,animal[i].age,animal[i].habitat,animal[i].poids,animal[i].category);
+    printf("| %-5s |  %-20s | %-20s  | %-5s  |  %-15s | %-6s  |  %-15s|\n","ID","NOM","ESPECE","AGE","HABITAT","POIDS","categorie");
+    printf("| %-5d |  %-20s | %-20s  | %-3d%s |  %-15s | %-7.2f |  %-15s|\n",animal[i].id,animal[i].nom,animal[i].espece,animal[i].age,message,animal[i].habitat,animal[i].poids,animal[i].category);
     printf("----------------------------------------------------------------------------------------------------------------\n");
 }
 
