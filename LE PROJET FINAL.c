@@ -98,7 +98,7 @@ int main() {
             case '1': {
                 printf("1:Ajouter un Animal.\n");
                 printf("2:Ajouter multiple animaux.\n");
-                printf("2:retour a menu.\n");
+                printf("3:retour a menu.\n");
                 int user_choix = user_int();
                 if (user_choix == 1) {
                     animal_nombre++;
@@ -120,7 +120,7 @@ int main() {
                 printf("1:Afficher la liste complete.\n");
                 printf("2:Afficher la liste trier par Nom.\n");
                 printf("3.Afficher la liste trier par Age.\n");
-                printf("4.Affichage par Habitat.\n");
+                printf("4.Affichage par Habitat.\n===>");
                 int user_choix = user_int();
                 if (user_choix == 1) { //affiche la liste
                     for(int i=0;i<=animal_nombre;i++){
@@ -176,6 +176,7 @@ int main() {
                 else if (user_choix == 4) { //recherche par habitat
                     char habitat_temp[50];
                     int ahla=0;
+                    printf("entrez l'habitat:\n==>");
                     fgets_char(habitat_temp);
                     for(int i=0;i<=animal_nombre;i++){
                     if(recherche(animal[i].habitat,habitat_temp,i)>-1){
@@ -198,6 +199,7 @@ int main() {
                 int store_index[100];
                 int index=-1,ahla=0;
                 int new_age=0;
+
                 printf("entrez l'animal que vous voulez modifier:\n==>");
                 fgets_char(temp_input[0]);
                 for(int i=0;i<=animal_nombre;i++){
@@ -214,16 +216,17 @@ int main() {
                 }
                 int choix=0;
                 for(int i=0;i<=index;i++){
-                    printf("indice:%d\n",i);
+                    printf("indice:____________________________________________%d____________________________________________\n",i);
                     affichage(store_index[i]);
                 }
+                printf("entrez l'indice d'animal:(pas le ID)");
                 scanf("%d",&choix);
                 getchar();
                 if(choix > -1 && choix <=index){
-                    printf("entrez le nouveau habitat (appuyez sur entrez si vous navez rien a changer)\n");
+                    printf("entrez le nouveau habitat (appuyez sur entrez si vous navez rien a changer)\n==>");
                     fgets_char(temp_input[1]);
                     if(temp_input[1][0]!='\n') strcpy(animal[store_index[choix]].habitat,temp_input[1]);
-                    printf("entrez le nouveau age d'animal (entrez 0 si vous n'avez rien a changer))\n");
+                    printf("entrez le nouveau age d'animal (entrez 0 si vous n'avez rien a changer))\n==>");
                     scanf("%d",&new_age);
                     getchar();
                     if(new_age!=0) animal[store_index[choix]].age=new_age;
@@ -288,13 +291,13 @@ int main() {
                 printf("1:rechercher par ID\n");
                 printf("2:rechercher par Nom\n");
                 printf("3:rechercher par espece\n");
-                printf("4:retour a la menu principale");
+                printf("4:retour a la menu principale\n==>");
                 int search_menu=user_int();
                 if (search_menu==1){
                 printf("entrez l'id d'animal:\n==>");
                 int search_id=user_int();
                 if ( int_search(search_id)> -1){
-                    affichage(int_search);
+                    affichage(int_search(search_id));
                 }
                 else {
                     printf("id introuvable!\n");
@@ -343,7 +346,7 @@ int main() {
                 printf("1:Nombre total d'animaux dans le Zoo.\n");
                 printf("2:Age moyen des animaux\n");
                 printf("3:plus vieux et plus jeune animal\n");
-                printf("4:Afficher les especes les plus representees\n");
+                printf("4:Afficher les especes les plus representees\n==>");
                 int stat_choix = user_int();
                 if(stat_choix==1){
                     printf("le nombre total d'animaux dans le zoo est : %d",animal_nombre);
@@ -371,13 +374,14 @@ int main() {
                             index_store2=i;
                         }
                     }
-
+                    
                     printf("le minimum age est %d",min);
                     affichage(index_store1);
-                    affichage{index_store2};
+                    printf("le maximum age est %d",max);
+                    affichage(index_store2);
                     // ana ba9i hna kol index fih index dyal wahd abro khask dir affichage dyalhom o tktb fo9hom min o max age
                 }
-                else if(stat_choix==2){
+                else if(stat_choix==4){
                     
                 }
 
@@ -394,7 +398,7 @@ int main() {
             }
 
             default: {
-                choix = '8';
+                choix = '0';
                 break;
             }
         }
@@ -414,7 +418,7 @@ int ajouter(int i) {
     fgets_char(animal[animal_nombre].espece);
     while (1) {
         printf("entrez le categorie d'animal:\n");
-        printf("1:carnivores:\n2:herbivores\n3:omnivores\n");
+        printf("1:carnivores:\n2:herbivores\n3:omnivores\n==>");
         int ncategory=user_int();
         if (ncategory == 1) {
             strcpy(animal[animal_nombre].category,"Carnivores");
@@ -440,6 +444,9 @@ int ajouter(int i) {
     printf("entrez le poids: ");
     scanf("%f", &animal[animal_nombre].poids);
     getchar();
+    printf("\nL'animal a ete ajoute avec succes!\n");
+    affichage(animal_nombre);
+    printf("\n\n");
     return i; //return the i which the indice of the animal so we can do l'affichage function
 }
 
