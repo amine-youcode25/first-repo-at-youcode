@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <stdbool.h>
 
 struct zoo {
-    //date de creation
+    //time_t now;
     int id;
     char nom[50];
     char espece[50];
@@ -14,15 +13,14 @@ struct zoo {
     char category[50];
 };
 
-struct zoo animal[200];
 
 struct count{
     char name[50];
     int count;
 };
-struct count espece[200];
+
 int espece_count_for_struct=15;
-struct count espece[]={
+struct count espece[200]={
     {"Lion",4},
     {"Tigre",1},
     {"Ours",1},
@@ -42,25 +40,25 @@ struct count espece[]={
 };
 
 
-struct zoo animal[] = {
-    {0, "Simba", "Lion", 5, "Savane", 190.5,"carnivores"},
-    {1, "Nala", "Lion", 4, "Savane", 175.0,"carnivores"},
-    {2, "ShereKhan", "Tigre", 8, "Jungle", 220.3,"carnivores"},
-    {3, "Baloo", "Ours", 12, "Forêt", 310.0,"carnivores"},
-    {4, "Raja", "Éléphant", 15, "Savane", 540.7,"Herbivores"},
-    {5, "Marty", "Zèbre", 6, "Savane", 300.2,"Herbivores"},
-    {6, "Gloria", "Hippopotame", 10, "Rivière", 450.0,"Herbivores"},
-    {7, "Alex", "Lion", 7, "Savane", 200.0,"carnivores"},
-    {8, "Julien", "Lémurien", 3, "Jungle", 12.5,"Herbivores"},
+struct zoo animal[200] = {
+    {0, "Simba", "Lion", 5, "Savane", 190.5,"Carnivores"},
+    {1, "Nala", "Lion", 4, "Savane", 175.0,"Carnivores"},
+    {2, "ShereKhan", "Tigre", 8, "Jungle", 220.3,"Carnivores"},
+    {3, "Baloo", "Ours", 12, "Foret", 310.0,"Carnivores"},
+    {4, "Raja", "Elephant", 15, "Savane", 540.7,"Herbivores"},
+    {5, "Marty", "Zebre", 6, "Savane", 300.2,"Herbivores"},
+    {6, "Gloria", "Hippopotame", 10, "Riviere", 450.0,"Herbivores"},
+    {7, "Alex", "Lion", 7, "Savane", 200.0,"Carnivores"},
+    {8, "Julien", "Lemurien", 3, "Jungle", 12.5,"Herbivores"},
     {9, "Melman", "Girafe", 9, "Savane", 390.8,"Herbivores"},
-    {10, "Timon", "Suricate", 2, "Désert", 1.2,"Omnivores"},
-    {11, "Pumbaa", "Phacochère", 5, "Savane", 120.0,"Herbivores"},
-    {12, "Scar", "Lion", 11, "Savane", 210.4,"carnivores"},
-    {13, "Kaa", "Serpent", 6, "Jungle", 45.0,"carnivores"},
+    {10, "Timon", "Suricate", 2, "Desert", 1.2,"Omnivores"},
+    {11, "Pumbaa", "Phacochere", 5, "Savane", 120.0,"Herbivores"},
+    {12, "Scar", "Lion", 11, "Savane", 210.4,"Carnivores"},
+    {13, "Kaa", "Serpent", 6, "Jungle", 45.0,"Carnivores"},
     {14, "Iko", "Perroquet", 4, "Jungle", 2.1,"Herbivores"},
-    {15, "Dumbo", "Éléphant", 3, "Savane", 320.0,"Herbivores"},
-    {16, "Kiki", "Chien sauvage", 7, "Savane", 25.0,"carnivores"},
-    {17, "Donatello", "Tortue", 40, "Rivière", 90.5,"Herbivores"},
+    {15, "Dumbo", "Elephant", 3, "Savane", 320.0,"Herbivores"},
+    {16, "Kiki", "Chien sauvage", 7, "Savane", 25.0,"Carnivores"},
+    {17, "Donatello", "Tortue", 40, "Riviere", 90.5,"Herbivores"},
     {18, "Polly", "Oiseau", 5, "Jungle", 1.5,"Herbivores"},
     {19, "Kong", "Gorille", 13, "Jungle", 180.0,"Omnivores"}
 };
@@ -70,6 +68,7 @@ struct zoo animal[] = {
 int animal_id = 19;
 int animal_nombre = 19;
 char user_char(); //function for any typo from user in char inputs
+float read_poids();
 int user_int(); //function for any typo from user in integer inputs
 void fgets_char(char string[]);
 int ajouter(int i);
@@ -132,10 +131,10 @@ int main() {
                 if (user_choix == 1) {
                     animal_nombre++;
                     ajouter(animal_nombre);
-                } else if (user_choix == 2) {
+                } else if (user_choix == 2) { //for multiple
                     printf("entrez combien des animaux vous voulez ajouter: ");
                     int multiple = user_int();
-                    for (int i = animal_nombre; i <= multiple+animal_nombre; i++) {
+                    for (int i = 0; i < multiple; i++) {
                         animal_nombre++;
                         ajouter(animal_nombre);
                     }
@@ -164,10 +163,10 @@ int main() {
                         arrayx[i]=i;
                     } //array d'indices
 
-                    
+
                     for(int i=0;i<=animal_nombre;i++){
                         for(int j=0;j<animal_nombre;j++){
-                        
+
                             if( strcmp(animal[arrayx[j]].nom,animal[arrayx[j+1]].nom)> 0){
                                 temp=arrayx[j+1];
                                 arrayx[j+1]=arrayx[j];
@@ -176,7 +175,7 @@ int main() {
                         }
                     } //storing indices trier
 
-                    
+
                     for(int i=0;i<=animal_nombre;i++){
                         affichage(arrayx[i]);
                     }//affiachage avec array alraedy with indexs trier
@@ -185,7 +184,7 @@ int main() {
 
                 else if (user_choix == 3) { //trier avec age
 
-                    int array_age[animal_nombre+1],temp;
+                    int array_age[animal_nombre+1];
                     for(int i=0;i<=animal_nombre;i++){
                         array_age[i]=i;
                     }
@@ -220,14 +219,14 @@ int main() {
                     if (ahla==0){
                         printf("y a pas d'animal avec cette habitat:\n");
                     }
-                    
+
 
                 }
                 break;
             }
             case '3': { //modifier un animal sulement l'habitat and l'age
 
-                char temp_input[3][50];
+                char temp_input[3][50]; //thought i can medify more than one string.
                 int store_index[100];
                 int index=-1,ahla=0;
                 int new_age=0;
@@ -247,10 +246,10 @@ int main() {
                 }
                 int choix=0;
                 for(int i=0;i<=index;i++){
-                    printf("indice:____________________________________________%d____________________________________________\n",i);
+                    printf(":____________________________________________%d____________________________________________\n",i);
                     affichage(store_index[i]);
                 }
-                printf("entrez l'indice d'animal:(pas le ID)");
+                printf("entrez le nombre d'animal:(pas le ID)");
                 scanf("%d",&choix);
                 getchar();
                 if(choix > -1 && choix <=index){
@@ -269,44 +268,42 @@ int main() {
                     printf("la modification a ete enregistrer!\n");
                     affichage(store_index[choix]);
                 }
+
+
                 else {
                     printf("invalid choix\n");
                 }
-                
-                
-
-                if (ahla==0) printf("l'animal introuvable:");
 
 
                 break;
             }
-            case '4': { //supprimer un animal.
+            case '4': { //supprimer un animal. par id ez
 
-                
-                
-                for(int i=0;i<=animal_nombre;i++){
+
+
+                for(int i=0;i<=animal_nombre;i++){ //affichage dla liste bach user ykhtar id en cas nsa...
                         affichage(i);
                     }
                 printf("entrez l'id d'animal:\n==>");
                 int dele_choix=user_int();
                 int dele;
 
-                if (dele_choix>-1 && dele_choix <= animal_nombre){
-                    affichage(dele_choix);
+                if (dele_choix>-1 && dele_choix <= animal_id){ //kbar mn 0 o sghar mn akhir id we assigned
+                    affichage(int_search(dele_choix)); //int search return i of ID
                     printf("vous etes sur que vous voulez supprimer cette animal(0:non/1:oui) ?\n==>");
                     scanf("%d",&dele);
                     getchar();
                     if(dele==0) break;
                     else if(dele==1){
-                        if (int_search(dele_choix)>=0){
+                        if (int_search(dele_choix)>=0){ //return -1 si msa7na xi id meme daz f satement lwla hna maghadix ydoz
                         for(int i =int_search(dele_choix);i<animal_nombre;i++){
-                            animal[i]=animal[i+1];
+                            animal[i]=animal[i+1];  //shift
                         }
                         animal_nombre--;
                         printf("   l'animal a ete supprimer avec succes!\n");
                         }
                         else {
-                            printf("id introuvable!\n");
+                            printf("id introuvable!\n"); //cad tmsa7
                             break;
                         }
                     }
@@ -339,7 +336,7 @@ int main() {
                     printf("id introuvable!\n");
                 }
             }
-            else if (search_menu==2){
+                else if (search_menu==2){
                 printf("entrez le nom d'animal:\n==>");
                 char temp_input[50];
                 fgets_char(temp_input);
@@ -349,11 +346,11 @@ int main() {
                     affichage(recherche(animal[i].nom,temp_input,i));
                     ahla=1;
                 }}
-                if (ahla==0) printf("le nom introuvable!\n"); 
-                
+                if (ahla==0) printf("le nom introuvable!\n");
+
             }
 
-            else if(search_menu==3){
+                else if(search_menu==3){
                 printf("entrez l'espece d'animal:\n==>");
                 char temp_input[50];
                 fgets_char(temp_input);
@@ -364,40 +361,37 @@ int main() {
                     ahla=1;
                 }
             }
-                if (ahla==0) printf("l'espece introuvable!\n"); 
+                if (ahla==0) printf("l'espece introuvable!\n");
             }
 
-            else if(search_menu==4){
+                else if(search_menu==4){
                 break;
             }
 
-            else {
+                else {
                 printf("choix invalid!\n");
                 break;
             }
-            
+
                 break;
             }
             case '6': {
-                printf("1:Nombre total d'animaux dans le Zoo.\n");
-                printf("2:Age moyen des animaux\n");
-                printf("3:plus vieux et plus jeune animal\n");
-                printf("4:Afficher les especes les plus representees\n==>");
-                int stat_choix = user_int();
-                if(stat_choix==1){
-                    printf("le nombre total d'animaux dans le zoo est : %d",animal_nombre);
-                }
-                else if(stat_choix==2){
-                    int average,sum;
+                printf("le nombre total d'animaux dans le zoo est : %d\n",animal_nombre+1);
+
+
+
+                //----------------------------------------------------------- 1
+                int sum=0;
                 for(int i=0;i<=animal_nombre;i++){
                     sum+=animal[i].age;
                 }
 
-                printf("l'age moyen des animaux:%d",sum/(animal_nombre+1));
-                }
+                printf("l'age moyen des animaux:%d\n",sum/(animal_nombre+1));
+                //-----------------------------------------------------------------2
 
-                else if(stat_choix==3){
-                    int min,max,index_store1,index_store2;
+
+
+                int min=animal[0].age,max=animal[0].age,index_store1,index_store2;
                     for(int i=0;i<=animal_nombre;i++){
                         if (min>animal[i].age){
                             min = animal[i].age;
@@ -410,22 +404,21 @@ int main() {
                             index_store2=i;
                         }
                     }
-                    
-                    printf("le minimum age est %d",min);
+
+                    printf("le plus jeune animal est %s\n",animal[index_store1].nom);
                     affichage(index_store1);
-                    printf("le maximum age est %d",max);
+                    printf("le plus vieux animal est %s\n",animal[index_store2].nom);
                     affichage(index_store2);
-                    //kol index fih index dyal wahd  khask dir affichage dyalhom o tktb fo9hom min o max age
-                }
-                else if(stat_choix==4){
-                    //as always indice f array
-     
-                    int array_tosort_forespece[espece_count_for_struct];
+
+
+                    //as always indice f array--------------------------------------------------------3
+
+                    int array_tosort_forespece[espece_count_for_struct+1];
                     for(int i=0;i<=espece_count_for_struct;i++){
                         array_tosort_forespece[i]=i;
                     }
-                    
-                    for(int i=0;i<=espece_count_for_struct;i++){
+
+                    for(int i=0;i<=espece_count_for_struct;i++){ //tri but just the indices to affiche in a good sort
                         for(int j=0;j<espece_count_for_struct;j++){
                         if(espece[array_tosort_forespece[j]].count>espece[array_tosort_forespece[j+1]].count){
                             int temp=array_tosort_forespece[j+1];
@@ -434,18 +427,10 @@ int main() {
                         }
                     }
                 }
-                printf("les especes les plus presentes sont:"); // les 3 especes dans le sort
-                for(int i=0;i<3;i++){
-                    printf("les especes les plus presentes sont:");
-
+                printf("les especes les plus representes sont:\n"); // les 3 especes dans le sort
+                for(int i=espece_count_for_struct;i>espece_count_for_struct-3;i--){
+                    printf("=======   %-10s-   %-5d=======\n",espece[array_tosort_forespece[i]].name,espece[array_tosort_forespece[i]].count);
                 }
-            }
-
-
-
-
-
-
                 break;
             }
             case '7': {
@@ -464,7 +449,7 @@ int main() {
 }
 
 
-int ajouter(int i) {
+int ajouter(int i) {//return i for affichage
     // time(&animal[animal_nombre].date_arrive);
     animal_id++;
     animal[animal_nombre].id=animal_id;
@@ -474,11 +459,11 @@ int ajouter(int i) {
     fgets_char(animal[animal_nombre].espece);
 
 
-    int ahla_espece=1;
-    for(int i=0;i<=espece_count_for_struct;i++){
-        if(strcasecmp(animal[animal_nombre].espece,espece[i].name)==0){
+    int ahla_espece=1; //to know deja inclus ou pas
+    for(int i=0;i<=espece_count_for_struct;i++){ //verify wach deja espece inclus ou non
+        if(strcmp(animal[animal_nombre].espece,espece[i].name)==0){
             ahla_espece=0;
-            espece[i].count++;
+            espece[i].count++; //cad deja inclus et on va ajouter 1 dans le count ( pour les plus representes )
             break;
         }
         else {
@@ -486,21 +471,18 @@ int ajouter(int i) {
         }
     }
 
-    if(ahla_espece==1){
+    if(ahla_espece==1){ // si il arrive la cad que mkynach fmon liste et je dois lajoute
         espece_count_for_struct++;
-        strcpy(espece[espece_count_for_struct].name,animal[animal_nombre].espece);
-        espece[i].count=0;
+        strcpy(espece[espece_count_for_struct].name,animal[animal_nombre].espece); //copy the new espece to my struct
+        espece[espece_count_for_struct].count=1; //done
     }
 
 
 
-
-
-
-
+        // boucle with 1 pour forcer user d'entrer un chiffre.
     while (1) {
         printf("entrez le categorie d'animal:\n");
-        printf("1:carnivores:\n2:herbivores\n3:omnivores\n==>");
+        printf("1:Carnivores:\n2:Herbivores\n3:Omnivores\n===>");
         int ncategory=user_int();
         if (ncategory == 1) {
             strcpy(animal[animal_nombre].category,"Carnivores");
@@ -525,9 +507,16 @@ int ajouter(int i) {
     fgets_char(animal[animal_nombre].habitat); //jai besoin najouter les habitat li machi deja endi f struct
 
 
-    printf("entrez le poids: ");
-    scanf("%f", &animal[animal_nombre].poids);
-    getchar();
+    //for optionnel poid
+    printf("vous voulez entrez le poids (0:Non/1:Yes) ?\n==>");
+    int option = user_int();
+    if (option == 1) {
+        printf("entrez le poids: \n==>");
+        scanf("%f", &animal[animal_nombre].poids);
+        getchar();
+    }
+
+    // animal[animal_nombre].poids= read_poids(); //ill hundle -1 flaffichage can'tttt
     printf("\nL'animal a ete ajoute avec succes!\n");
     affichage(animal_nombre);
     printf("\n\n");
@@ -543,9 +532,17 @@ void affichage(int i) {
 
     printf("________________________________________________________________________________________________________________\n");
     printf("| %-5s |  %-20s | %-20s  | %-5s  |  %-15s | %-6s  |  %-15s|\n","ID","NOM","ESPECE","AGE","HABITAT","POIDS","categorie");
-    printf("| %-5d |  %-20s | %-20s  | %-3d%s |  %-15s | %-7.2f |  %-15s|\n",animal[i].id,animal[i].nom,animal[i].espece,animal[i].age,message,animal[i].habitat,animal[i].poids,animal[i].category);
+    // printf("| %-5d |  %-20s | %-20s  | %-3d%s |  %-15s | %-7.2f |  %-15s|\n",animal[i].id,animal[i].nom,animal[i].espece,animal[i].age,message,animal[i].habitat,animal[i].poids,animal[i].category);
+    printf("| %-5d |  %-20s | %-20s  | %-3d%s |  %-15s |",animal[i].id,animal[i].nom,animal[i].espece,animal[i].age,message,animal[i].habitat);
+    if (animal[i].poids>0) printf(" %-7.2f ",animal[i].poids);
+    else {
+        printf(" %-6s  ","____");
+    }
+    printf("|  %-15s|\n",animal[i].category);
     printf("----------------------------------------------------------------------------------------------------------------\n");
 }
+
+
 
 void fgets_char(char string[]) {
     //for clean user input and mince new line,the put 0 in the new line of the string
@@ -558,7 +555,6 @@ char user_char() {
     //function for any typo from user in character inputs
     char newline_check;
     char choix;
-    while (1) {
         if (scanf("%c%c", &choix, &newline_check) == 2 && newline_check == '\n') {
             //scanf the integer and the first character
             return choix;
@@ -567,7 +563,6 @@ char user_char() {
             }
             return 'a';
         }
-    }
 }
 
 int user_int() {
